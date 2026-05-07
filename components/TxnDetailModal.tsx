@@ -25,6 +25,8 @@ export default function TxnDetailModal({ txn, onClose, accent }: { txn: Txn; onC
   const [whyOpen, setWhyOpen] = useState<number | null>(null);
   const [selectedCat, setSelectedCat] = useState(txn.cat);
   const [recatDone, setRecatDone] = useState(false);
+  const [autoLearnSaving, setAutoLearnSaving] = useState(false);
+  const [autoLearnDone, setAutoLearnDone] = useState(false);
 
   const impact = TXN_GOAL_IMPACT[txn.id] ?? { type: txn.align, summary: 'No detailed impact data for this transaction.', goalShifts: [], monthlyContext: null, tip: null };
   const aColor = alignColors[txn.align] ?? '#64748B';
@@ -33,6 +35,16 @@ export default function TxnDetailModal({ txn, onClose, accent }: { txn: Txn; onC
   function doRecat(cat: string) {
     setSelectedCat(cat);
     setRecatDone(true);
+    setAutoLearnDone(false);
+  }
+
+  function saveAutoLearnRule() {
+    if (autoLearnSaving) return;
+    setAutoLearnSaving(true);
+    setTimeout(() => {
+      setAutoLearnSaving(false);
+      setAutoLearnDone(true);
+    }, 750);
   }
 
   return (
@@ -163,8 +175,19 @@ export default function TxnDetailModal({ txn, onClose, accent }: { txn: Txn; onC
                 ))}
               </div>
               <div style={{ background: '#F0FDF4', borderRadius: 12, padding: '12px 14px', fontSize: 13, color: '#15803D', lineHeight: 1.5 }}>
-                <strong>Auto-learn:</strong> Want us to always categorize {txn.merchant} as {selectedCat}? We'll remember your choice.
-                <button style={{ display: 'block', marginTop: 8, padding: '8px 14px', borderRadius: 8, background: '#15803D', border: 'none', color: '#fff', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>Yes, always do this</button>
+                {!autoLearnDone ? (
+                  <>
+                    <strong>Auto-learn:</strong> Want us to always categorize {txn.merchant} as {selectedCat}? We&apos;ll remember your choice.
+                    <button onClick={saveAutoLearnRule} disabled={autoLearnSaving} style={{ display: 'block', marginTop: 8, padding: '8px 14px', borderRadius: 8, background: '#15803D', border: 'none', color: '#fff', fontSize: 12, fontWeight: 600, cursor: autoLearnSaving ? 'default' : 'pointer', opacity: autoLearnSaving ? 0.8 : 1, fontFamily: 'inherit' }}>
+                      {autoLearnSaving ? 'Saving rule...' : 'Yes, always do this'}
+                    </button>
+                  </>
+                ) : (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontWeight: 600 }}>
+                    <span style={{ fontSize: 14 }}>✅</span>
+                    Auto-learn enabled. Future {txn.merchant} transactions will be categorized as {selectedCat}.
+                  </div>
+                )}
               </div>
             </div>
           )}

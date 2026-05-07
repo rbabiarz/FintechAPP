@@ -1,24 +1,16 @@
 'use client';
-import { useEffect, useState } from 'react';
 import { CATEGORY_DATA } from '../lib/data';
 import type { Txn } from '../lib/data';
 
 const alignColors: Record<string, string> = { aligned: '#15803D', neutral: '#64748B', 'out-of-sync': '#B45309' };
 const alignBgs: Record<string, string>    = { aligned: '#DCFCE7', neutral: '#F1F5F9', 'out-of-sync': '#FEF3C7' };
 
-export default function SpendingDrilldown({ category, onClose, onTxnTap, accent }: {
+export default function SpendingDrilldown({ category, onClose, onTxnTap }: {
   category: string;
   onClose: () => void;
   onTxnTap: (t: Txn) => void;
-  accent: string;
 }) {
-  const [entering, setEntering] = useState(true);
   const data = CATEGORY_DATA[category];
-
-  useEffect(() => {
-    const t = setTimeout(() => setEntering(false), 50);
-    return () => clearTimeout(t);
-  }, []);
 
   if (!data) return null;
 

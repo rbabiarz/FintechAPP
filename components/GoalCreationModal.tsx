@@ -79,7 +79,7 @@ export default function GoalCreationModal({ onClose, onSave, accent }: {
   const scoreBoost = Math.min(Math.max(Math.floor(monthlyNum / 80), 2), 12);
   const tcolor = template?.color ?? accent;
 
-  const canNext = [!!template, !!(targetAmt && targetDate), true, true][step] ?? false;
+  const canNext = [!!template, !!(targetAmt && targetDate), linked.length > 0, true][step] ?? false;
 
   if (celebrating) {
     return (
@@ -87,7 +87,7 @@ export default function GoalCreationModal({ onClose, onSave, accent }: {
         <div style={{ fontSize: 64, marginBottom: 16, animation: 'goalBounce 0.6s ease' }}>🎉</div>
         <div style={{ fontSize: 22, fontWeight: 700, color: '#0F2A4A', textAlign: 'center', marginBottom: 8 }}>Goal created!</div>
         <div style={{ fontSize: 14, color: '#64748B', textAlign: 'center', lineHeight: 1.6, maxWidth: 260 }}>
-          Your <strong style={{ color: tcolor }}>{template?.id === 'custom' ? (customName || 'goal') : (template?.label ?? 'goal')}</strong> goal is now live. We'll nudge you when you hit key milestones.
+          Your <strong style={{ color: tcolor }}>{template?.id === 'custom' ? (customName || 'goal') : (template?.label ?? 'goal')}</strong> goal is now live. We&apos;ll nudge you when you hit key milestones.
         </div>
         <div style={{ marginTop: 28, width: 200, height: 5, borderRadius: 99, background: '#E8F5F5', overflow: 'hidden' }}>
           <div style={{ height: '100%', background: tcolor, borderRadius: 99, animation: 'goalLoadBar 1.4s ease forwards' }} />
@@ -100,7 +100,7 @@ export default function GoalCreationModal({ onClose, onSave, accent }: {
     if (step === 0) return (
       <div>
         <div style={{ fontSize: 21, fontWeight: 700, color: '#0F2A4A', marginBottom: 4 }}>What are you saving for?</div>
-        <div style={{ fontSize: 13, color: '#64748B', marginBottom: 18, lineHeight: 1.5 }}>Pick a goal to get started. You'll customize it next.</div>
+        <div style={{ fontSize: 13, color: '#64748B', marginBottom: 18, lineHeight: 1.5 }}>Pick a goal to get started. You&apos;ll customize it next.</div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
           {GOAL_TEMPLATES.map(t => {
             const sel = template?.id === t.id;
@@ -157,7 +157,7 @@ export default function GoalCreationModal({ onClose, onSave, accent }: {
           </div>
           {monthly && targetAmt && monthsNeeded && (
             <div style={{ marginTop: 8, padding: '10px 12px', borderRadius: 10, background: tcolor + '12', fontSize: 13, color: tcolor, fontWeight: 500, lineHeight: 1.4 }}>
-              At {fmtGoalAmt(monthly)}/mo → you'll reach {fmtGoalAmt(targetAmt)} in <strong>{monthsNeeded} months</strong>
+              At {fmtGoalAmt(monthly)}/mo → you&apos;ll reach {fmtGoalAmt(targetAmt)} in <strong>{monthsNeeded} months</strong>
             </div>
           )}
         </div>
@@ -190,7 +190,7 @@ export default function GoalCreationModal({ onClose, onSave, accent }: {
     if (step === 3) return (
       <div>
         <div style={{ fontSize: 21, fontWeight: 700, color: '#0F2A4A', marginBottom: 4 }}>Your goal impact</div>
-        <div style={{ fontSize: 13, color: '#64748B', marginBottom: 18, lineHeight: 1.5 }}>Here's what this goal means for your financial picture.</div>
+        <div style={{ fontSize: 13, color: '#64748B', marginBottom: 18, lineHeight: 1.5 }}>Here&apos;s what this goal means for your financial picture.</div>
         <div style={{ background: tcolor, borderRadius: 20, padding: '18px', color: '#fff', marginBottom: 14, position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', top: -24, right: -24, width: 110, height: 110, borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }} />
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 14, position: 'relative' }}>

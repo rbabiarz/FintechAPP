@@ -10,6 +10,7 @@ export const T = {
   slate700:'#334155',
   slate500:'#64748B',
   slate300:'#CBD5E1',
+  slate200:'#E2E8F0',
   slate100:'#F1F5F9',
   success: '#15803D',
   successBg:'#DCFCE7',
