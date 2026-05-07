@@ -1,3 +1,3 @@
-### 1.1 The Product in One Paragraph
+### The Product in One Paragraph
 
 A goals-driven personal finance platform that reframes money management around the life a person is trying to build, rather than the accounts they happen to hold. By unifying banking, investing, and behavioral guidance into a single interface anchored by user-defined life milestones — home ownership, education, early retirement, family security — and applying transparent AI to translate everyday spending into goal impact, the platform addresses the emotional and behavioral gap that existing personal finance management (PFM) tools have left unfilled for over a decade.
