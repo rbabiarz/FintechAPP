@@ -754,7 +754,7 @@ function ProfileTab({ accent, persona }: { accent: string; persona: string }) {
 
   type Sheet = 'manage' | 'link' | 'alerts' | 'dataAccess' | 'export' | 'deleteAccount' | null;
   const [sheet, setSheet] = useState<Sheet>(null);
-  const [manageAcct, setManageAcct] = useState<{ icon: string; label: string; sub: string } | null>(null);
+  const [manageAcct, setManageAcct] = useState<{ id: string; icon: string; label: string; sub: string } | null>(null);
   const [disconnectConfirm, setDisconnectConfirm] = useState(false);
   const [accounts, setAccounts] = useState([
     { id: 'chase',    icon: '🏦', label: 'Chase Checking',    sub: '••••4823 · Linked 3 days ago' },
@@ -871,7 +871,7 @@ function ProfileTab({ accent, persona }: { accent: string; persona: string }) {
 
       {/* ── Manage Account Sheet ── */}
       {sheet === 'manage' && manageAcct && (
-        <ProfileSheet title="Manage Account" onClose={() => setSheet(null)}>
+        <ProfileSheet title="Manage Account" onClose={() => { setDisconnectConfirm(false); setManageAcct(null); setSheet(null); }}>
           <div style={{ display: 'flex', gap: 14, alignItems: 'center', background: T.white, borderRadius: 16, padding: '16px', marginBottom: 16, boxShadow: '0 1px 6px rgba(0,0,0,0.05)' }}>
             <span style={{ fontSize: 32 }}>{manageAcct.icon}</span>
             <div><div style={{ fontSize: 16, fontWeight: 700, color: T.navy900 }}>{manageAcct.label}</div><div style={{ fontSize: 13, color: T.slate500, marginTop: 2 }}>{manageAcct.sub}</div></div>
@@ -881,7 +881,7 @@ function ProfileTab({ accent, persona }: { accent: string; persona: string }) {
               { label: 'Last synced', value: 'Just now' },
               { label: 'Access level', value: 'Read-only' },
               { label: 'Encryption', value: '256-bit AES' },
-              { label: 'Compliance', value: 'CFPB §1033' },
+              { label: 'Compliance', value: 'CFPB Section 1033' },
             ].map((row, i, arr) => (
               <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 16px', borderBottom: i < arr.length - 1 ? `1px solid ${T.slate100}` : 'none' }}>
                 <span style={{ fontSize: 13, color: T.slate500 }}>{row.label}</span>
@@ -897,7 +897,7 @@ function ProfileTab({ accent, persona }: { accent: string; persona: string }) {
               <p style={{ fontSize: 13, color: '#7F1D1D', lineHeight: 1.55, marginBottom: 14 }}>This removes the connection. Your historical data is preserved but won&apos;t update until you reconnect.</p>
               <div style={{ display: 'flex', gap: 10 }}>
                 <button onClick={() => setDisconnectConfirm(false)} style={{ flex: 1, padding: '12px', borderRadius: 12, border: `1.5px solid ${T.slate300}`, background: 'transparent', color: T.slate700, fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
-                <button onClick={() => { setAccounts(prev => prev.filter(a => a.id !== (accounts.find(a => a.label === manageAcct.label)?.id))); setSheet(null); }} style={{ flex: 1, padding: '12px', borderRadius: 12, border: 'none', background: T.error, color: '#fff', fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>Disconnect</button>
+                <button onClick={() => { const id = manageAcct.id; setAccounts(prev => prev.filter(a => a.id !== id)); setDisconnectConfirm(false); setManageAcct(null); setSheet(null); }} style={{ flex: 1, padding: '12px', borderRadius: 12, border: 'none', background: T.error, color: '#fff', fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>Disconnect</button>
               </div>
             </div>
           )}
@@ -909,7 +909,7 @@ function ProfileTab({ accent, persona }: { accent: string; persona: string }) {
         <ProfileSheet title="Link an Account" onClose={() => setSheet(null)}>
           <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 14, background: '#F0FDF4', borderRadius: 10, padding: '8px 12px' }}>
             <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1a6 6 0 1 1 0 12A6 6 0 0 1 7 1zm0 4v3l2 1" stroke="#15803D" strokeWidth="1.5" strokeLinecap="round" /></svg>
-            <span style={{ fontSize: 11, color: '#15803D', fontWeight: 600 }}>256-bit encryption · Read-only · CFPB §1033</span>
+            <span style={{ fontSize: 11, color: '#15803D', fontWeight: 600 }}>256-bit encryption · Read-only · CFPB Section 1033</span>
           </div>
           <div style={{ position: 'relative', marginBottom: 14 }}>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ position: 'absolute', left: 11, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>
